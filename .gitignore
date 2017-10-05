@@ -27,8 +27,8 @@ responses.map
 bin/
 
 # Temporary ignores until we figure out lfs
-*.jar
-*.png
-*.wav
-*.jpg
-*.pdf
+#*.jar
+#*.png
+#*.wav
+#*.jpg
+#*.pdf
