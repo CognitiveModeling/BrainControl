@@ -1,0 +1,27 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying commands to set a new goal
+ *
+ * TODO: those commands should be generic!
+ * goals should be possibly generalized effects like: INCREASE_HEALTH, KNOWLEDGE_INCREASE, INCREASE_ENERGYS, ... 
+ * should be handled by reservoir-associated planners
+ *
+ * @author Chantal, Mihael, Katrin
+ */
+
+grammar goal;
+
+<MWO> = <knowledge.MWO>;
+<nonLivingObject> = <knowledge.nonLivingObject>;
+<player> = <players.player>;
+
+public <goal>	= ((find | look for | go to | collect | hit | interact with | meet | touch | collide with) {GOAL} [a|an|the] (<MWO> | <nonLivingObject> | <player>) {OBJECT}) |
+				  (((improve|increase) [your] health [condition]) {GOAL} {OBJECT_HEALTH_INCREASE} {TARGET} {EFFECT} {OBJECT}) |
+				  (((improve|increase) [your] (energy |energy count)) {GOAL} {ENERGY_INCREASE} {TARGET} {EFFECT} {OBJECT}) |
+				  (((improve|increase) [your] esteem) {GOAL} {MOUNT} {TARGET} {EFFECT} {OBJECT}) |
+				  (((improve|increase) [your] esteem) {GOAL} {CARRY} {TARGET} {EFFECT} {OBJECT}) |
+				  (((improve|increase) [your] esteem) {GOAL} {UNMOUNT} {TARGET} {EFFECT} {OBJECT}) |
+				  (((improve|increase) [your] esteem) {GOAL} {DROP} {TARGET} {EFFECT} {OBJECT}) |
+				  ((kill [a|an|the] enemy) {GOAL}{ENEMY}{OBJECT}) |
+				  go {POSITIONAL} (all the way to the ( (end|right) {POS_END} | left {POS_START}) | back to the start {POS_START});

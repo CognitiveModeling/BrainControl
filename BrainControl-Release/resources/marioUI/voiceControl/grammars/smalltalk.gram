@@ -1,0 +1,24 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying smalltalk (also used for controlling the game flow)
+ */
+
+grammar smalltalk;
+
+
+
+public <smalltalk> =  ( ( hello | hi | hey | good (morning|afternoon|evening) ) {SMALLTALK(GREET)} ) |
+                      ( (how are you | how do you feel | are you happy | how's it hanging | what's cracking | how's it going) {SMALLTALK(FEELING)} );
+			
+<toggleReservoirs> =  	([now] ( do something [else] | [just] do what [ever] you want | think for your self ) [now]) {CONTROL(RES_ON)} | 
+			( 
+				(((hold up) | wait | stop) [[for] a second]) |   
+				((stop | quit) (it | that | acting | messing around)) 
+			) {CONTROL(RES_OFF)};			
+
+public <control>       = 	((exit|quit) the game) {CONTROL(EXIT)} |
+				(yes | of course | certainly) {CONTROL(YES)} |
+				(no | negative | never | (no way) | (not in your life) | (no chance)) {CONTROL(NO)} |
+			  	<toggleReservoirs> |
+			  	([do that] again | repeat [that [again]] | go on) {CONTROL(REPEAT)};

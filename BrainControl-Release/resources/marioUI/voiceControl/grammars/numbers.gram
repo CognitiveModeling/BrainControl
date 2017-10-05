@@ -1,0 +1,62 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Numbers Grammar 
+ * @author: smihael
+ */
+ 
+grammar numbers;
+
+//digits
+<digit> = 	zero {AMOUNT_POWER_ONE(0)} | 
+		one {AMOUNT_POWER_ONE(1)} | 
+		two {AMOUNT_POWER_ONE(2)} | 
+		three {AMOUNT_POWER_ONE(3)} | 
+		four {AMOUNT_POWER_ONE(4)} | 
+		five {AMOUNT_POWER_ONE(5)} | 
+		six {AMOUNT_POWER_ONE(6)} | 
+		seven {AMOUNT_POWER_ONE(7)} | 
+		eight {AMOUNT_POWER_ONE(8)} | 
+		nine {AMOUNT_POWER_ONE(9)};
+
+//numbers between ten and nineteen have special structure
+<teen> = 	ten {AMOUNT_POWER_ONE(0)} {AMOUNT_POWER_TWO(1)} | 
+		eleven {AMOUNT_POWER_ONE(1)} {AMOUNT_POWER_TWO(1)} | 
+		twelve {AMOUNT_POWER_ONE(2)} {AMOUNT_POWER_TWO(1)} | 
+		thirteen {AMOUNT_POWER_ONE(3)} {AMOUNT_POWER_TWO(1)} | 
+		fourteen {AMOUNT_POWER_ONE(4)} {AMOUNT_POWER_TWO(1)} | 
+		fifteen {AMOUNT_POWER_ONE(5)} {AMOUNT_POWER_TWO(1)} | 
+		sixteen {AMOUNT_POWER_ONE(6)} {AMOUNT_POWER_TWO(1)} | 
+		seventeen {AMOUNT_POWER_ONE(7)} {AMOUNT_POWER_TWO(1)} | 
+		eighteen {AMOUNT_POWER_ONE(8)} {AMOUNT_POWER_TWO(1)} | 
+		nineteen {AMOUNT_POWER_ONE(9)} {AMOUNT_POWER_TWO(1)};
+
+//tens
+<ty> = 	twenty {AMOUNT_POWER_TWO(2)} |
+	thirty {AMOUNT_POWER_TWO(3)} |
+	forty {AMOUNT_POWER_TWO(4)} |
+	fifty {AMOUNT_POWER_TWO(5)} |
+	sixty {AMOUNT_POWER_TWO(6)} |
+	seventy {AMOUNT_POWER_TWO(7)} |
+	eighty {AMOUNT_POWER_TWO(8)} |
+	ninety {AMOUNT_POWER_TWO(9)};
+
+//magnitudes
+//<big> = hundred | thousand; 
+
+//compounds up to hundred
+<tens> = ([<ty>] <digit>) | // e.g. twenty one, five
+	        <teen> | // e.g. thirteen
+	        <ty>; // e.g. forty
+
+//more complex compunds      
+//<compund> = ([<tens>] <big>)* [<tens>]; // e.g. five hundred thousand, two thousand five
+
+//sequence of digits, e.g. one-one-two 
+//public <digits> = ( oh | <digit>)*;  
+
+//numerical numbers (if typed in directly)
+//<num> = (0|1|2|3|4|5|6|7|8|9)+;
+
+//written numbers up to a million
+public <number> = <tens>;

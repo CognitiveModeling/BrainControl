@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Rsrc-Class-Path: ./ lib/ant-contrib-0.6.jar lib/batch.jar lib/jdom.jar lib/js.jar lib/jsapi.jar lib/jsapi-1.0-base.jar lib/mario_acoustic_model.jar lib/sphinx4.jar lib/tags.jar lib/junit.jar lib/org.hamcrest.core_1.3.0.v201303031735.jar
+Class-Path: .
+Rsrc-Main-Class: mario.main.StartJar
+Main-Class: org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader
+

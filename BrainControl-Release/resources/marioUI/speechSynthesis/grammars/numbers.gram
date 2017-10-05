@@ -1,0 +1,26 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Numbers Grammar 
+ * @author: smihael
+ */
+ 
+grammar numbers;
+
+
+<digit> = zero | one | two | three | four | five | six | seven | eight | nine;
+<teen> = ten | eleven | twelve | thirteen | fourteen | fifteen | sixteen | seventeen | eighteen | nineteen;
+<ty> = twenty | thirty | forty | fifty | sixty | seventy | eighty | ninety;
+<big> = hundred | thousand; 
+
+
+public <digits> = ( oh | <digit>)*; // e.g. one-oh-one 
+
+
+<tens> = ([<ty>] <digit>) | // e.g. twenty one, five
+	        <teen> | // e.g. thirteen
+	        <ty>; // e.g. forty
+                
+<compund> = ([<tens>] <big>)* [<tens>]; // e.g. five hundred thousand, two thousand five
+
+public <numbers> = (<tens> | <compund>);

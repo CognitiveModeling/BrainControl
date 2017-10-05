@@ -1,0 +1,96 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying syntax needed for knowledge representation 
+ * using natural language aimed to make queries in player's brain and
+ * giving feedback to reinforce entries obtained by self-motivated learning
+ */
+
+grammar knowledge;
+
+
+//SUBJECT: who is taking the action?
+//OBJECT: collision target?
+//TARGET: to whom the effect should be applied?
+
+
+<player> = <players.player>;
+<player_as_pupil> = <players.player_as_pupil>;
+
+<possible_subjects> = (<players.player_as_subject> | <objects.possible_subjects>);
+<possible_objects> = <objects.possible_objects>;
+<possible_targets> = <objects.possible_targets>;
+
+<smalltalk> = <smalltalk.smalltalk>;
+<control> = <smalltalk.control>;
+
+<health>  = (and|while|when) you 
+			(
+				are small {HEALTHCONDITION(SMALL)} | 
+				are (large|healthy) {HEALTHCONDITION(LARGE_NON_BULB)} | 
+				(have bulb [power] | are bulb [<player>]) {HEALTHCONDITION(BULB)} | 
+				are invulnerable {HEALTHCONDITION(INVULNERABLE)}
+			) |
+			<NULL> {HEALTHCONDITION(IRRELEVANT)};
+
+public <direction> = 
+			(
+				(from (above | the top)) {COLLISIONDIRECTION(ABOVE)} |
+				(from (below | the bottom)) {COLLISIONDIRECTION(BELOW)} | 
+				(from the left [side]) {COLLISIONDIRECTION(LEFT)} |
+				(from the right [side]) {COLLISIONDIRECTION(RIGHT)} |
+				(<NULL>) {COLLISIONDIRECTION(IRRELEVANT)}
+			);
+
+<probabilities> 	= 	(maybe | perhaps | possibly) {PROBABILITY(MAYBE)} |
+				(probably | likely | presumably) {PROBABILITY(PROBABLY)} |
+				(certainly | clearly | undoubtedly) {PROBABILITY(CERTAINLY)};
+
+<conjunction> = ( if | when | in case );
+				
+<action> = ((collide|collides) with | (run|runs) into | (hit|hits) | (bump|bumps) into | (touch|touches));
+
+<subject>			=	((you) {SUBJECT(PLAYER)}) | ([a|an|the] <possible_subjects>);
+<object> 			=	[a|an|the|that] <possible_objects> | <players.player_as_object> | (you {OBJECT(PLAYER)}) ;
+<player_target>			=	(you {TARGET(PLAYER)}) | (<players.player_as_target>) | ((he | she) {TARGET(PRONOUN)});
+
+<non_player_target> 		= 	([a|an|the] [new] <possible_targets>) | it | they;
+
+<property_effect>	=	((gather | gathers | collect | collects | get | gets) [more] energy) {EFFECT(ENERGY_INCREASE)} |
+				((lose | loses) [more] energy) {EFFECT(ENERGY_DECREASE)} |
+				((get |gets) healthy | (gain| gains) health) {EFFECT(OBJECT_HEALTH_INCREASE)} |
+				((get | gets) hurt | (lose | loses) health) {EFFECT(OBJECT_HEALTH_DECREASE)} | 
+				(mount (him|her|somebody)  | (mounts | mount) (you {NEW_TARGET(PLAYER)})) {EFFECT(MOUNT)} |
+				(unmount (him|her|somebody)) {EFFECT(UNMOUNT} |
+				(carry (him|her|somebody)) {EFFECT(CARRY)} |
+				(drop (him|her|somebody)) {EFFECT(DROP)}
+				;
+
+<world_effect>		=	(created) {EFFECT(OBJECT_CREATION)} |
+				(destroyed) {EFFECT(OBJECT_DESTRUCTION)};
+
+<world_effect_infinitive>	=	(create) {EFFECT(OBJECT_CREATION)} |
+					(destroy) {EFFECT(OBJECT_DESTRUCTION)};
+				
+<noEffect> = (nothing happens | it doesn't matter | nothing changes | no one cares | never mind) {EFFECT(NOTHING_HAPPENS)};
+
+<provide_knowledge>	=	[listen] <conjunction> <subject> <action> <object> <direction> <health> [then]
+				(
+					(<player_target> [will <probabilities> | <probabilities> will | <probabilities> | will] <property_effect>) |
+					(<non_player_target> [(is|are) <probabilities> | will <probabilities> be | (is|are) | will be] <world_effect>) |
+					<noEffect>
+				);
+
+<request_knowledge> = tell 
+		(
+			(<player_as_pupil> [more]) {KNOWLEDGE(TRANSFER)} |
+			(me [more] [about]) {KNOWLEDGE(QUERY)}
+		)
+		( 
+			([something | all [you know]] about <object>) |
+			(how to <property_effect>) |
+			(how to <world_effect_infinitive> <object>)
+		);
+
+<knowledge> =		<provide_knowledge> {KNOWLEDGE(FEEDBACK)} |
+			<request_knowledge>;

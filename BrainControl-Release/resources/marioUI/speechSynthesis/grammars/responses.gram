@@ -1,0 +1,233 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying Player's responses to knowledge queries
+ * author: Mihael
+ */
+
+grammar responses;
+
+<player> = <players.player>;
+<fps> = <players.fps>;
+<fps2> = <players.fps2>;
+<MWO> = <knowledge.MWO>; 
+<nonLivingObject> = <knowledge.nonLivingObject>;//TODO: Now all combinations of articles and objects possible - therefore the articles should be defined in <MWO> and <nonLivingObject>
+<probabilities> = <knowledge.probabilities>;
+<collisionDirection> = <knowledge.collide>;
+<noEffect> = <knowledge.noEffect>;
+
+<nonPlayerObject> = (<MWO> | <nonLivingObject>);
+ 
+<COMMA>  = comma; // hack to add pause when text is being synthesized	//TODO: its not possible to speak e.g. "command" this way -.- ... also, whats about period, question/exclamation mark? 
+
+<politeness> = (Can you | could you | Do you mind to);
+
+/*
+	First person responses to knowledge queries
+*/
+
+//TODO: use the same component as in knowledge.gram for this:
+<firstPersonActionDirection> = (walk on | jump on | stamp my feet on) {ABOVE} |
+                               (hit|collide with) the left side of {LEFT} |
+                               (hit|collide with) the right side of {RIGHT} |
+                               knock my head with {BELOW} |
+                               (run into|collide with|hit) {IRRELEVANT};
+                               
+<firstPersonEffect>          = I will {PLAYER} [<probabilities>] die {OBJECT_DESTRUCTION} |
+					   I will {PLAYER} [<probabilities>] get [even] more energy {ENERGY_INCREASE} |
+			                   I will {PLAYER} [<probabilities>] get strong and healthy {OBJECT_HEALTH_INCREASE} |
+			                   it will {PLAYER} [<probabilities>] hurt me {OBJECT_HEALTH_DECREASE} |
+			                   I will {PLAYER} [<probabilities>] get esteem {MOUNT} |
+			                   I will {PLAYER} [<probabilities>] get esteem {CARRY} |
+			                   I will {PLAYER} [<probabilities>] get esteem {UNMOUNT} |
+			                   I will {PLAYER} [<probabilities>] get esteem {DROP}
+			                   ;
+			                   
+<thirdPersonEffect>          = 	it (is [<probabilities>] destroyed | [<probabilities>] (disappears|dies)) {OBJECT_DESTRUCTION} |
+								a [new] <nonPlayerObject> (is [<probabilities>] (created|generated|constructed) | [<probabilities>] appears) {OBJECT_CREATION} | //TODO: find a solution for sentences like this (should be a [new] ...)
+								[<probabilities>] nothing happens {NOTHING_HAPPENS};
+			                   
+<firstPersonResponses>       =  ((if | when) <fps> <firstPersonActionDirection> a <nonPlayerObject> <COMMA> then (<thirdPersonEffect> | <firstPersonEffect> | <noEffect>)) {RESPONSETYPE(KNOWLEDGE_RESPONSE)};
+
+
+/*
+	messages and dialogs from brain
+*/
+<RESPONSETYPE_GREETINGS> 				= ((hello | hi | hey) [buddy | dude | bro]);
+<RESPONSETYPE_INTRODUCTION> 				= ((I am | my name is | it's me <COMMA>) <player>);
+<RESPONSETYPE_CONFIRM_WORLD_GOAL> 			= (okay | affirmative);
+<RESPONSETYPE_CONFIRM_KNOWLEDGE_INPUT> 			= (i understand | yes <COMMA> i got that | if you say so);
+<RESPONSETYPE_OBJECT_LOOKUP_FAILED> 			= (i can't find such a thing);
+<RESPONSETYPE_PLAYER_LOOKUP_FAILED> 			= (i can't find him);
+<RESPONSETYPE_CONFIRM_MOVEMENT_GOAL> 			= (yay | yahoo | hooray | yoo hoo | yee haw);      
+<RESPONSETYPE_OUT_OF_ENERGY> 				= (i don't have enough energy);
+<RESPONSETYPE_WORLD_GOAL_REACHED> 			= (goal reached | done | ready | strike);
+<RESPONSETYPE_SENSORIMOTOR_PLANNING_FAILED> 		= (no idea how to get there | i don't get how i can get there | please help me get there);
+<RESPONSETYPE_SENSORIMOTOR_EXECUTION_FAILED> 		= (oops <COMMA> something went wrong during action execution);
+
+<RESPONSETYPE_CONFIRM_RESERVOIR_GOAL> 			= 	(
+									(i want to learn more) {ACTION(INCREASE)} {RESERVOIR(CURIOSITY)} |
+									(i know enough) {ACTION(DECREASE)} {RESERVOIR(CURIOSITY)} |
+									(i want to get healthy) {ACTION(INCREASE)} {RESERVOIR(HEALTHINESS)} |
+									(i am healthy enough) {ACTION(DECREASE)} {RESERVOIR(HEALTHINESS)} |
+									(i want to get more energy) {ACTION(INCREASE)} {RESERVOIR(ENERGY)} |
+									(i don't need energy) {ACTION(DECREASE)} {RESERVOIR(ENERGY)} |
+									(i want to make progress) {ACTION(INCREASE)} {DIRECTION(RIGHT)} {RESERVOIR(PROGRESS)} |
+									(i want to go back) {ACTION(INCREASE)} {DIRECTION(LEFT)} {RESERVOIR(PROGRESS)} |
+									(i have made enough progress) {ACTION(DECREASE)} {RESERVOIR(PROGRESS)} |
+								    (i want to make friends) {ACTION(INCREASE)} {RESERVOIR(ESTEEM)} | 
+								    (i don't want make new friends right now) {ACTION(DECREASE)} {RESERVOIR(ESTEEM)} 
+								);
+
+//this is called when an instructed effect cannot be reached... happens only when destruction of creation was instructed, other effect goals work via the motivational system
+<RESPONSETYPE_SCHEMATIC_PLANNING_FAILED> 		= 	(
+									(please (show|tell|explain) me how to destroy (such an object | that) here) {EFFECT(OBJECT_DESTRUCTION)} |
+									(please (show|tell|explain) me how to mount that player here) {EFFECT(MOUNT)} |
+									(please (show|tell|explain) me how to unmount that player here) {EFFECT(UNMOUNT)} |
+									(please (show|tell|explain) me how to drop that player here) {EFFECT(DROP)} |									
+									(please (show|tell|explain) me how to carry that player here) {EFFECT(CARRY)} |
+									(please (show|tell|explain) me how to create (such an object | that) here) {EFFECT(OBJECT_CREATION)}
+								);
+							
+//this is called when the goal planner cannot find a goal and a random reservoir is activated
+<RESPONSETYPE_GOAL_SELECTION_FAILED> 			= 	(
+									((there is nothing interesting to me here | it's quite boring here) <COMMA> please entertain me) {PLANNERTYPE(CURIOSITY)} |
+									((i would like to improve my health | i think i need better health) <COMMA> can you help me with it) {PLANNERTYPE(OBJECT_HEALTH_INCREASE)} |
+									((i would like to get more energy | poor me <COMMA> how do i get energy) <COMMA> please help me) {PLANNERTYPE(ENERGY_INCREASE)} |
+									(could you please tell me how to make progress here | i would like to make progress in the level now <COMMA> please help me) {PLANNERTYPE(MOVEMENT)} |
+									(could you please tell me how to get recognition) {PLANNERTYPE(ESTEEM)} |
+									(please tell me what to do | what shall i do next | what now) {PLANNERTYPE(NONE)}
+								);
+													
+<RESPONSETYPE_CONFIRM_SELF_MOTIVATION_ON> 		= (let me see what i can do here);
+<RESPONSETYPE_CONFIRM_SELF_MOTIVATION_OFF> 		= (okay <COMMA> i will listen to your order);
+<RESPONSETYPE_GOODBYE> 					= (good bye | have a nice day | see you soon);
+<RESPONSETYPE_KNOWLEDGE_LOOKUP_FAILED>			= (i do not know anything [<COMMA> i swear] | i know nothing | i have no (idea|clue) <COMMA> please tell me something about that);
+
+<simpleAnswers> = 
+	<RESPONSETYPE_GREETINGS> {RESPONSETYPE(GREETINGS)} |
+	<RESPONSETYPE_INTRODUCTION> {RESPONSETYPE(INTRODUCTION)} |
+	<RESPONSETYPE_CONFIRM_WORLD_GOAL> {RESPONSETYPE(CONFIRM_WORLD_GOAL)} |
+	<RESPONSETYPE_CONFIRM_KNOWLEDGE_INPUT> {RESPONSETYPE(CONFIRM_KNOWLEDGE_INPUT)} |
+	<RESPONSETYPE_OBJECT_LOOKUP_FAILED> {RESPONSETYPE(OBJECT_LOOKUP_FAILED)} |
+	<RESPONSETYPE_PLAYER_LOOKUP_FAILED> {RESPONSETYPE(PLAYER_LOOKUP_FAILED)} |
+	<RESPONSETYPE_CONFIRM_RESERVOIR_GOAL> {RESPONSETYPE(CONFIRM_RESERVOIR_GOAL)} |
+	<RESPONSETYPE_CONFIRM_MOVEMENT_GOAL> {RESPONSETYPE(CONFIRM_MOVEMENT_GOAL)} |                               
+	<RESPONSETYPE_OUT_OF_ENERGY> {RESPONSETYPE(OUT_OF_ENERGY)} |
+	<RESPONSETYPE_WORLD_GOAL_REACHED> {RESPONSETYPE(WORLD_GOAL_REACHED)} |
+	<RESPONSETYPE_SENSORIMOTOR_PLANNING_FAILED> {RESPONSETYPE(SENSORIMOTOR_PLANNING_FAILED)} |
+	<RESPONSETYPE_SCHEMATIC_PLANNING_FAILED> {RESPONSETYPE(SCHEMATIC_PLANNING_FAILED)} |
+	<RESPONSETYPE_SENSORIMOTOR_EXECUTION_FAILED> {RESPONSETYPE(SENSORIMOTOR_EXECUTION_FAILED)} |
+	<RESPONSETYPE_GOAL_SELECTION_FAILED> {RESPONSETYPE(GOAL_SELECTION_FAILED)} |
+	<RESPONSETYPE_CONFIRM_SELF_MOTIVATION_ON> {RESPONSETYPE(CONFIRM_SELF_MOTIVATION_ON)} |
+	<RESPONSETYPE_CONFIRM_SELF_MOTIVATION_OFF> {RESPONSETYPE(CONFIRM_SELF_MOTIVATION_OFF)} |
+	<RESPONSETYPE_GOODBYE> {RESPONSETYPE(GOODBYE)} |
+	<RESPONSETYPE_KNOWLEDGE_LOOKUP_FAILED> {RESPONSETYPE(KNOWLEDGE_LOOKUP_FAILED)};
+
+/*
+	Expression of goal plans
+*/
+
+<you> = you {INTERLOCUTOR};
+
+<activePlayer> = <player> | <fps> | <you>;
+<passivePlayer> = <player> | <fps2> | <you>;
+<propertyEffect> =  (gather energy | collect energy | get [(more | new)] energy) {EFFECT(ENERGY_INCREASE)} |
+				(lose [more] energy) {EFFECT(ENERGY_DECREASE)} |
+				(get healthy | gain health) {EFFECT(OBJECT_HEALTH_INCREASE)} |
+				(get hurt | lose health) {EFFECT(OBJECT_HEALTH_DECREASE)};						
+<worldEffect> = (create) {EFFECT(OBJECT_CREATION)} |
+				(travel to) {EFFECT(TRANSPORTATION)} |
+				(destroy) {EFFECT(OBJECT_DESTRUCTION)};
+<playerInteractionEffect> = (mount) {EFFECT(MOUNT)} |
+							(jump off of) {EFFECT(UNMOUNT)} |
+							(carry) {EFFECT(CARRY)} |
+							(drop) {EFFECT(DROP)};	
+<collisionVerbs> = hit | touch | collide with;
+<findingVerbs> = find | look for | go to;
+<interactionVerbs> = interact with | meet;
+
+
+// used for explaining one's plan
+<future> = <activePlayer> will;
+// used for suggesting a final goal
+<subjunctive> = <activePlayer> would like to;
+
+<playerInteraction> = (<findingVerbs> | <collisionVerbs> | <interactionVerbs>) {INTERACTION_TARGET} <passivePlayer>;
+<objectInteraction> = (<findingVerbs> | <collisionVerbs>) {INTERACTION_TARGET} <nonPlayerObject>;
+<directionalCollision> =<collisionVerbs> {INTERACTION_TARGET} ([a|an|the] <nonPlayerObject> | <passivePlayer>) [<collisionDirection>];
+<propertyEffectPlan> =  <propertyEffect>;
+<worldEffectPlan> = <worldEffect> <nonPlayerObject>;
+<playerInteractionEffectPlan> = <playerInteractionEffect> <passivePlayer>;
+
+<effectPlan> = <propertyEffectPlan> | <worldEffectPlan>;
+<interactionPlan> = <playerInteraction> | <objectInteraction> | <directionalCollision>;
+<simplePlan> = (walk | go) ([over] there | to that place);
+
+<singlePlan> = <future> ( <effectPlan> | <interactionPlan> | <simplePlan> | <playerInteractionEffectPlan>) ;
+<suggestGoal> = <subjunctive> (<effectPlan> | <interactionPlan> | <simplePlan> | <playerInteractionEffectPlan>);
+
+
+<offerHelp> = (I would like to (help | assist) you) {RESPONSETYPE(OFFER_HELP)};
+<goalSuggestion> = (<suggestGoal> <COMMA> (What do you think about a collaboration | Do you want to cooperate | Do we want to work together)) {RESPONSETYPE(SUGGEST_GOAL)};
+<askingForPlan> = (How do you (want to do | plan on doing) this | What is your plan){RESPONSETYPE(ASK_PLAN)};
+<planSuggestion> = <player> <COMMA> (How about this plan | We could do it like that | What do you think about this plan) {RESPONSETYPE(SUGGEST_PLAN)};
+<planAcception> = (Ok <COMMA> lets do that | What are we waiting for | Lets go) {RESPONSETYPE(ACCEPT_PLAN)};
+<planRejection> = (I have a better idea | I know a better way) {RESPONSETYPE(REJECT_PLAN)};
+<firstGoal> = <singlePlan> {RESPONSETYPE(FIRST_GOAL)};
+<intermediateGoal> = and then <singlePlan> {RESPONSETYPE(INTERMEDIATE_GOAL)};
+<lastGoal> = and finally <singlePlan> {RESPONSETYPE(LAST_GOAL)};
+
+<planResponse> = <offerHelp> | <goalSuggestion>|<askingForPlan>| <planSuggestion> | <planAcception> | <planRejection> | <firstGoal> | <intermediateGoal> | <lastGoal>;
+
+<actor> = 	(
+				I (need to | have to){ACTOR(THIS)} |
+				Clark (needs to | has to) {ACTOR(CLARK)} |
+				Bruce (needs to | has to) {ACTOR(BRUCE)} |
+				Peter (needs to | has to) {ACTOR(PETER)} |
+				Jay (needs to | has to) {ACTOR(JAY)}
+			);
+			
+<target> = 	(
+				me {THIS} |
+				Clark {CLARK} |
+				Bruce {BRUCE} |
+				Peter {PETER} |
+				Jay {JAY} |
+				this location {TOP_DIRT_BORDER_GROUND}
+			);
+			
+<negotiationEffect> = 			(<actor>
+										(
+											(mount <target>) {EFFECT(MOUNT)} |
+											(destroy a <nonPlayerObject>) {EFFECT(OBJECT_DESTRUCTION)} |
+											(jump off <target>) {EFFECT(DISMOUNT)} |
+											(gather a <nonPlayerObject>) {EFFECT(OBJECT_HEALTH_INCREASE)} |
+											(gather a <nonPlayerObject>) {EFFECT(ENERGY_INCREASE)} |
+											(transport me to <target>) {EFFECT(TRANSPORTATION)}
+										)
+									);
+
+<RESPONSETYPE_NEGOTIATION_START> = (I (need your help | require your assistance) to achieve a goal <COMMA> first <negotiationEffect>);
+<RESPONSETYPE_NEGOTIATION_BODY> = 	((then | after that | next) <negotiationEffect>);
+<RESPONSETYPE_NEGOTIATION_END> = (and finally <negotiationEffect>);
+<RESPONSETYPE_NEGOTIATION_COUNTER_PLAN> = (I have a counter proposal for your plan);
+<RESPONSETYPE_NEGOTIATION_ACCEPT> = (I will help you with your goal) {RESPONSETYPE(NEGOTIATION_ACCEPT)};
+<RESPONSETYPE_NEGOTIATION_DECLINE> = (I am sorry <COMMA> but I will not help you with your goal) {RESPONSETYPE(NEGOTIATION_DECLINE)};
+
+									
+<negotiationStart> =  <RESPONSETYPE_NEGOTIATION_START> {RESPONSETYPE(NEGOTIATION_START)};
+<negotiationBody> = <RESPONSETYPE_NEGOTIATION_BODY> {RESPONSETYPE(NEGOTIATION_BODY)};
+<negotiationEnd> = <RESPONSETYPE_NEGOTIATION_END> {RESPONSETYPE(NEGOTIATION_END)};
+<negotiationCounter> = <RESPONSETYPE_NEGOTIATION_COUNTER_PLAN> {RESPONSETYPE(NEGOTIATION_COUNTER_PLAN)};
+<negotiationResult> = (<RESPONSETYPE_NEGOTIATION_ACCEPT> | <RESPONSETYPE_NEGOTIATION_DECLINE>);
+                       
+<negotiation> = <negotiationStart> | <negotiationBody> | <negotiationEnd> | <negotiationCounter> | <negotiationResult>;
+//<negotiation> =  <RESPONSETYPE_NEGOTIATION_START> {RESPONSETYPE(NEGOTIATION_START)};                               
+/*
+	all three kinds of responses
+*/
+public <responses>           = <simpleAnswers> | <firstPersonResponses> | <planResponse> | <negotiation> ;
+
+
+

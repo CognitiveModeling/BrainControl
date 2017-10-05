@@ -25,3 +25,10 @@ hs_err_pid*
 responses.list
 responses.map
 bin/
+
+# Temporary ignores until we figure out lfs
+*.jar
+*.png
+*.wav
+*.jpg
+*.pdf

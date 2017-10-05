@@ -1,0 +1,17 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying commands to manipulate with reservoirs
+ *
+ * @author Chantal, Mihael
+ */
+ 
+grammar reservoir;
+
+
+public <reservoir>	= (
+							( increase {reservoir increase} | decrease {reservoir decrease} )
+								( hunger { hunger } | curiosity { curiosity } | happiness { happy } | fear { fear } | esteem {esteem} )	|
+							( be {reservoir increase} | ( don't be | do not be ) {reservoir decrease} )
+								( hungry { hunger} | curious { curiosity } 	| happy { happy } | anxious	{ fear }  )
+					   ) {end} ;

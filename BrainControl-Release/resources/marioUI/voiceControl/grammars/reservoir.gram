@@ -1,0 +1,28 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying commands to manipulate with reservoirs
+ */
+ 
+grammar reservoir;
+
+public <reservoir>	=
+			[now] (
+				(make progress) {RESERVOIR(PROGRESS)} {DIRECTION(RIGHT)} {ACTION(INCREASE)} |
+				(only make progress) {RESERVOIR(PROGRESS)} {DIRECTION(RIGHT)} {ACTION(INCREASE)} {EXCLUSIVE(UNIQUE)} |
+				(retreat | go back) {RESERVOIR(PROGRESS)} {DIRECTION(LEFT)} {ACTION(INCREASE)}  |
+				(only (retreat | go back)) {RESERVOIR(PROGRESS)} {DIRECTION(LEFT)} {ACTION(INCREASE)} {EXCLUSIVE(UNIQUE)} |
+				((increase|improve|watch) [your] energy | collect energy) {RESERVOIR(ENERGY)} {ACTION(INCREASE)} |
+				(only (increase|improve|watch) [your] energy | collect energy) {RESERVOIR(ENERGY)} {ACTION(INCREASE)} {EXCLUSIVE(UNIQUE)} |
+				((increase|improve|watch) [your] health) {RESERVOIR(HEALTHINESS)} {ACTION(INCREASE)} |
+				(only (increase|improve|watch) [your] health) {RESERVOIR(HEALTHINESS)} {ACTION(INCREASE)} {EXCLUSIVE(UNIQUE)} |
+				((increase|improve|watch) [your] esteem) {RESERVOIR(ESTEEM)} {ACTION(INCREASE)} |
+				(only (increase|improve|watch) [your] esteem) {RESERVOIR(ESTEEM)} {ACTION(INCREASE)} {EXCLUSIVE(UNIQUE)} |
+				(increase [your] curiosity | be [more] curious) {RESERVOIR(CURIOSITY)} {ACTION(INCREASE)} |
+				(only (increase [your] curiosity | be [more] curious)) {RESERVOIR(CURIOSITY)} {ACTION(INCREASE)} {EXCLUSIVE(UNIQUE)} |
+				(stop (making progress | retreating)) {RESERVOIR(PROGRESS)} {ACTION(DECREASE)} |
+				(stop ((increasing|improving|watching) [your] energy)) {RESERVOIR(ENERGY)} {ACTION(DECREASE)} |
+				(stop ((increasing|improving|watching) [your] health)) {RESERVOIR(HEALTHINESS)} {ACTION(DECREASE)} |
+				(stop ((increasing|improving|watching) [your] esteem)) {RESERVOIR(ESTEEM)} {ACTION(DECREASE)} |
+				(stop (increasing [your] curiosity | being curious)) {RESERVOIR(CURIOSITY)} {ACTION(DECREASE)}
+			) [now|immediately];

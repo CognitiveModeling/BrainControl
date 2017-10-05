@@ -1,0 +1,19 @@
+#JSGF V1.0;
+
+/**
+ * Main JSGF Grammar
+ */
+
+grammar menu;
+
+
+<player> = <players.player>;
+<player_as_target> = <players.player_as_target>;
+
+public <goal> 		= [<player>] <goal.goal>;
+public <reservoir> 	= [<player>] <reservoir.reservoir>; 
+public <directions> 	= [<player>] <directions.directions>;
+public <knowledge> 	= [<player>] <knowledge.knowledge>;
+public <smalltalk>      = [<player>] <smalltalk.smalltalk> [<player>];
+public <control>        = [<player>] <smalltalk.control> [<player>] |
+                           <player> ( transfer | give ) [<numbers.number>] energy [units] to <player_as_target> {CONTROL(ENERGY_TRANSFER)};

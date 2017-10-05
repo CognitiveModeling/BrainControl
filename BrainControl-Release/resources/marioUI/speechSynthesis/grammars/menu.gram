@@ -1,0 +1,39 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar 
+ *
+ * author: Katrin, Mihael, chantal
+ */
+
+grammar menu;
+
+//import <players.player>
+//import <goal.*>;
+//import <reservoir.*>;
+//import <directions.*>;
+//import <knowledge.*>;
+
+//this works instead of imports...
+<player> = <players.player>;
+public <goal> 		= [<player>] <goal.goal>;
+public <reservoir> 	= [<player>] <reservoir.reservoir>; 
+public <directions> = [<player>] <directions.directions>;
+public <knowledge>  = [<player>] <knowledge.knowledge>;
+
+public <command> =	((exit|quit) [the game] { EXIT } |
+					 yes { YES } |
+					 no	{ NO } |
+					<smalltalk>);
+				
+public <smalltalk> = ([<player>]
+						(((hello|hi|hey) {GREET}) | 
+						((how are you | how do you feel | are you happy | how's it hanging | what's cracking | how's it going) {FEELING}))
+					  [<player>]) {SMALLTALK} {end};
+
+					  
+public <new> = ( <player> ( transfer | give ) [<numbers.numbers>] energys to <player> {ENERGY_TRANSFER} ) |
+			   ( deactivate reservoirs {RES_ STOP} ) |
+			   ( activate reservoirs {RES_START} );
+
+

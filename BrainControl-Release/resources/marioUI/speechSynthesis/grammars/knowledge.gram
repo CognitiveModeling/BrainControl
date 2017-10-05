@@ -1,0 +1,92 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying commands to give Mario feedback and to make queries in his knowledge base 
+ * author: Mihael, Chantal
+ */
+
+grammar knowledge;
+
+//this works instead of an import
+<player> = <players.player>;
+<sps> = <players.sps>;
+
+<knowledge> =  <commands> {end};
+
+//SUBJECT: wer führt die Aktion aus?
+//OBJECT: womit wird kollidiert?
+//TARGET: auf wen wird der effekt angewendet?
+//try: mario listen luko dies when you hit it
+//luigi listen if you hit a question mark from the bottom and you are healthy then you certainly get even more energys
+
+<commands> = 	( (what (do you know | can you tell me) about | what's the deal with | tell me [about]) <knowledgeObject> {KNOWLEDGE} | 
+				  (what will happen | what happens) (if|when|in case) <knowledgeEffect> {KNOWLEDGE} | 
+				  [listen] <feedback> {FEEDBACK} ) {PLAYER}{SUBJECT} |
+				  <transfer>; 
+
+<knowledgeObject> = <interactionTarget>;
+
+<knowledgeEffect> = <effectTarget> <action> <interactionTarget> <collide> <health>;
+
+<interactionTarget> = it | ( [a|an|the] (<MWO> | <nonLivingObject>) | <sps>) {OBJECT};
+<effectTarget>      = it | ( [a|an|the] [new] (<MWO> | <nonLivingObject>) | <sps>) {TARGET};
+
+//TODO: Benennung des letzten Effekts deaktiviert.
+
+<feedback> =	<interactionTarget> [<probabilities>] <effect> [<probabilities>] <condition> |
+				<condition> [then] (<effectTarget> [will] [<probabilities>] <effect> [<probabilities>] | <noEffect>) |
+				<noEffect> to <interactionTarget> <condition>;
+			
+<noEffect> = (nothing happens|it doesn't matter|no harm is done|it is OK) {NOTHING_HAPPENS};			
+					
+<effect> = 	([will] die | [just] died | dies | is destroyed | destroyed) {OBJECT_DESTRUCTION} | 
+			([will]get|gets|got) ([even] [more] energy) {ENERGY_INCREASE} |
+			([will] get | [just] got) (strong|healthy|strong and healthy) {OBJECT_HEALTH_INCREASE} | 
+			(will get hurt|got hurt) {OBJECT_HEALTH_DECREASE} |
+			<effectTarget> is created {OBJECT_CREATION} |
+			<effectTarget> changes its speed {OBJECT_SPEED_CHANGE} |
+			([will] mount (him|her|somebody)) {MOUNT} | 
+			([will] unmount (him|her|somebody)) {UNMOUNT} |
+			([will] carry (him|her|somebody)) | ([will] be carried) {CARRY} |
+			([will] drop (him|her|somebody)) {DROP};
+
+<condition> = (if | when | in case) you <action> <interactionTarget> <collide> <health>;
+
+/* 
+ * Mario enemies (from https://en.wikipedia.org/wiki/List_of_recurring_Mario_franchise_enemies)
+ * Tags have to match to ENUM keys in MarioWorldObject from ch.idsia.mario.engine
+ */
+<MWO> = 		Luko {LUKO} |  
+			Bullet Willy {BULLET_WILLY} | 
+			Wrench {WRENCH} |  
+			Bulb Flower {BULB_FLOWER} ;
+			
+<nonLivingObject> = (question mark) {QUESTIONMARK_BLOCK1} |
+					(energy) {ENERGY_FRONT} |
+					(iron block) {IRON_BLOCK1} |
+					(stone) {STONE_BLOCK} |
+					(door with left arrow) {BOTTOM_LEFT_DOOR} |
+					(door with right arrow) {BOTTOM_RIGHT_DOOR} |
+					(peter's block) {PETERS_BLOCK1} |
+					(this location) {TOP_DIRT_BORDER_GROUND} |
+					(simple block) {SIMPLE_BLOCK1};		//etc... to be extended...
+
+<health>  = (and|while|when) you 
+			(are small {SMALL}{HEALTHCONDITION} | 
+			 are (large|healthy) {LARGE_NON_FIRE}{HEALTHCONDITION} | 
+			 (have bulb [power] | are bulb [<player>]) {FIRE}{HEALTHCONDITION} | 
+			 are invulnerable {INVULNERABLE}{HEALTHCONDITION}) |
+			<NULL>;
+
+<action> = ((collide|collides) with | (run|runs) into | (hit|hits) | (bump|bumps) | (touch|touches));
+
+<collide> = ((from (above | the top)) {ABOVE} {COLLISIONDIRECTION}) |
+			((from (below | the bottom)) {BELOW} {COLLISIONDIRECTION}) | 
+			((from the left [side]) {LEFT} {COLLISIONDIRECTION}) |
+			((from the right [side]) {RIGHT} {COLLISIONDIRECTION}) |
+			<NULL>;
+
+<probabilities> = (maybe | perhaps | possibly) {MAYBE} | (probably | likely | presumably) {PROBABLY} | (certainly | clearly | undoubtedly) {CERTAINLY};
+
+<transfer> = <player> tell <player> all you know {TRANSFER} | exchange knowledge {EXCHANGE} | <player> tell <player> all about <MWO> {object} {SPECIFIC_OBJECT} 
+				| <player> tell <player> how to <effect> {effect} {SPECIFIC_EFFECT} | <player> tell <player> how [to] <effect> {effect} [(a | an)] <MWO> {object}  {SPECIFIC_OBJ_EFFECT};

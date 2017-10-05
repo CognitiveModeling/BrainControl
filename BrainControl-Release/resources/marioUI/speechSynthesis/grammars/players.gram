@@ -1,0 +1,16 @@
+#JSGF V1.0;
+
+/** 
+ * author: Fabian
+ */
+
+grammar players;
+
+<clark> = Clark {PLAYER(CLARK)};
+<jay> = Jay {PLAYER(JAY)}; 
+<bruce> = Bruce {PLAYER(BRUCE)};
+<peter> = Peter {PLAYER(PETER)};
+<player> = (<clark> | <jay> | <bruce> | <peter>);
+
+<sps> = (you | ya | you'd) {PLAYER};
+<fps> = I {PLAYER}; <fps2> = (me | myself) {PLAYER};

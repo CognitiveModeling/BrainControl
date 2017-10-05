@@ -1,0 +1,24 @@
+//
+// Tutorial file for Releaselevel 2
+// ================================
+//
+// Note: each line corresponds to one block of help messages.
+// Syntax: minx:maxx:autotime:text1|text2|... 
+// 
+// The help message block becomes active when the maximal x coordinate of any player is in [minx,maxx]
+// The next active message blocks are played when 
+//   a) the help button is pressed 
+//   b) the specified time in the column 3 ("autotime") has passed (in seconds). A negative value disables autoplay. 
+//
+
+
+// first automated greeting message
+//
+0:10:0: Look over there! This guy made his way to the auditive cortex, too. Maybe they can work together in order to progress. | You can control both players by addressing them with their respective names \"Clark\" and \"Peter\".
+5:30:0: Different players can have different motivations. You can make one player collect energy and the other go the direct way.
+63:72:0: Seems like someone locked Peter in. Maybe you can help him?
+43:50:0: Clark can share what he knows about an object but you have to tell him to do so. He is highly functional but... | also a sociopath.
+43:50:-1: Say "Clark tell Peter all about simple block."
+121:125:0: Maybe you noticed that you can get a wrench from a question mark block in case you are damaged. However you sometimes get a light bulb from it. | ... | I wonder who has the time for running around and putting energy and other stuff into mysterious blocks... 
+140:145:0: Oh, by the way: If going forward gets too boring, you can say \"retreat\" and go an a nostalgic walk. | Maybe you even forgot something back there?
+211:216:0: The end is getting closer. It seems like our little friends have more in mind than just exploring the human brain. | ... | What could it be?

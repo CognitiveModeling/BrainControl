@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>BrainControl</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<variableList>
+		<variable>
+			<name>eSpeak</name>
+			<value>$%7Bes%7D</value>
+		</variable>
+		<variable>
+			<name>es</name>
+			<value>file:/C:/eSpeak/command_line/espeak.exe</value>
+		</variable>
+	</variableList>
+</projectDescription>

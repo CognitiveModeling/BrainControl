@@ -1,0 +1,65 @@
+//
+// Tutorial file for Releaselevel 0
+// ================================
+//
+// Note: each line corresponds to one block of help messages.
+// Syntax: minx:maxx:autotime:text1|text2|... 
+// 
+// The help message block becomes active when the maximal x coordinate of any player is in [minx,maxx]
+// The next active message blocks are played when 
+//   a) the help button is pressed 
+//   b) the specified time in the column 3 ("autotime") has passed (in seconds). A negative value disables autoplay. 
+//
+
+
+// first automated greeting message
+//
+0:2:0:Welcome to \"Super Mar-!\" I mean.. | Welcome to \"Brain Control!\"
+0:2:0:In the year 2XXX researchers equipped nanobots with the instinct of curiosity. Now this little guy is able to explore the human brain on his own.
+0:5:0:You can help Clark by voice or by typing in text messages. If you do not know what to do, open the menu and press the help or the commands button.
+//
+//
+// Now the player should move clark a little bit to the right
+//  
+0:5:-1:Try to move Clark to the right.
+// 
+// If the player does not get it, give some hint, 
+//
+0:5:5:The most basic commands that Clark understands are \"go left\", \"go right\" and \"jump\".
+0:5:-1:Say (or type) \"go right\"!
+// 
+// Now needs to jump right 
+//
+5:7:0:Perfect. Go ahead!  
+10:15:10:Clark also understands \"jump to the right\" or just \"jump right\".
+10:15:-1:Say (or type) \"jump right\"!
+// 
+// On the little hill 
+//
+16:19:0: Well done. 
+20:23:0:This is an object called \"question mark\". Under \"Options\", you can find a button to display the names of interactive objects.  
+//20:30:0:Clark can have goals. | When you set a goal - for example going to a position - he tries to reach this goal all by himself!
+20:30:0:Clark can have goals. | When you set a goal - for example go to a question mark - he tries to reach this goal all by himself!    
+//20:30:3:If there are multiple possible targets, Clark chooses the nearest one.| He seems a little bit lazy. 
+//20:30:3:You can select a position through clicking on the screen where Clark should focus his attention.
+20:30:-1:Go to the grass. Then say \"touch question mark\".
+//20:30:-1:Click on the screen and select a position. Then say \"go there\".
+//
+31:44:0:Keep it up!
+// In front of the platforms
+41:44:0:You can also select a position through clicking on the screen where Clark should focus his attention. Then you can tell him to go there.
+41:58:-1:Click on the screen and select a position. Then say \"go there\".
+//41:58:-1:Say \"touch stone\" again.| Seriously, is it that difficult?
+//
+//
+59:60:0:Ordering the little guy around really tires him out and he begins to move slower.
+59:60:0:As luck will have it, there is some energy up ahead! Go grab it and revitalize Clark.
+59:79:-1:Go on!
+77:78:0:Ah - that´s the stuff. 
+
+101:112:0:Oh, these blocks. Can you see them? They seem to be really fragile, but so are you! 
+121:125:0:Clarks planning algorithm can solve challenging problems that require multiple movement steps. For this he needs motivation. When he reaches a goal, his motivation system makes him search for the next fitting one automatically.
+121:125:0:Try to motivate Clark to make some progress on his own.
+121:125:5:Tell Clark to make progress.
+121:125:-1:Say \"make progress\"!
+154:157:0:You can say \"stop\" to interrupt Clark in his current action.

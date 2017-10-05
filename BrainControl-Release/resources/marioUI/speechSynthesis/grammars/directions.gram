@@ -1,0 +1,15 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying commands to give basic direction commands
+ * author: Katrin, Mihael
+ */
+
+grammar directions;
+
+public <directions> = (<go> | <jump> | <wait>) {end};
+
+<go> = (go | run | walk | head) [to the] ( left { primitive left } | right { primitive right } );
+<jump> = (jump [up]) { primitive jump } |
+		 jump [to the] (left { primitive jump_left } |right { primitive jump_right } );
+<wait> = (hold up | wait | stop) [[for] a second] { primitive wait };

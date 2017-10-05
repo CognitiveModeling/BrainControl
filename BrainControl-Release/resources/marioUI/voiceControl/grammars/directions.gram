@@ -1,0 +1,16 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying commands to control movement
+ * by giving basic direction commands
+ */
+
+grammar directions;
+
+public <directions> = <go> | <jump> | <carrydrop>;
+
+<go> = [go | run | walk | head | move] [to the] ( left {MOVEMENT(LEFT)} | right {MOVEMENT(RIGHT)} );
+
+<jump> = (jump [up]) {MOVEMENT(JUMP)} | jump [to the] (left {MOVEMENT(JUMP_LEFT)} | right {MOVEMENT(JUMP_RIGHT)} );
+
+<carrydrop> = (carry {MOVEMENT(CARRYDROP)}) | (drop {MOVEMENT(CARRYDROP)});

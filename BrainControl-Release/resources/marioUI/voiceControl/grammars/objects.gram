@@ -1,0 +1,41 @@
+#JSGF V1.0;
+
+/**
+ * Grammar specifying human friendly object names
+ */
+ 
+ 
+grammar objects;
+
+<possible_subjects> = 						Luko {SUBJECT(LUKO)} |  
+								Bullet Willy {SUBJECT(BULLET_WILLY)} | 
+								Wrench {SUBJECT(WRENCH)} |  
+								Bulb Flower {SUBJECT(BULB_FLOWER)};
+
+<possible_objects> = 						(Luko|Lukos) {OBJECT(LUKO)} |
+								 Bullet (Willy|Willys) {OBJECT(BULLET_WILLY)} | 
+								 Wrench {OBJECT(WRENCH)} |  
+								 Bulb (Flower|Flowers) {OBJECT(BULB_FLOWER)} |
+								 question (mark [(block | blocks)] | marks) {OBJECT(QUESTIONMARK_BLOCK1)} |
+								(energy| energy ball) {OBJECT(ENERGY_FRONT)} |
+								(iron block|iron blocks) {OBJECT(IRON_BLOCK1)} |
+								(simple block|simple blocks) {OBJECT(SIMPLE_BLOCK1)} |
+								door with [a |the] left (arrow | arrows) {OBJECT(BOTTOM_LEFT_DOOR)} |
+								door with [a |the] left (arrow | arrows) {OBJECT(BOTTOM_RIGHT_DOOR)} |
+								(peters block|peters blocks) {OBJECT(PETERS_BLOCK1)} |
+								(that | there) [(position | location)] {OBJECT(SELECTED_TILE)} |
+								(stone|stones) {OBJECT(STONE_BLOCK)};
+								
+<possible_targets> = 						(Luko|Lukos) {TARGET(LUKO)} |
+								Bullet (Willy | Willys) {TARGET(BULLET_WILLY)} |
+								Wrench {TARGET(WRENCH)} |
+								Bulb (Flower | Flowers) {TARGET(BULB_FLOWER)} |
+								question (mark [(block | blocks)] | marks) {TARGET(QUESTIONMARK_BLOCK1)} |
+								(energy | energy ball) {TARGET(ENERGY_FRONT)} |
+								iron (block | blocks) {TARGET(IRON_BLOCK1)} |
+								door with [a |the] left (arrow|arrows) {TARGET(BOTTOM_LEFT_DOOR)} |
+								door with [a |the] right(arrow|arrows) {TARGET(BOTTOM_RIGHT_DOOR)} |
+								simple (block | blocks) {TARGET(SIMPLE_BLOCK1)} |
+								(peters block|peters blocks) {TARGET(PETERS_BLOCK1)} |
+								((that | there) [(position | location)]) {TARGET(SELECTED_TILE)} |
+								(stone | stones){TARGET(STONE_BLOCK)};

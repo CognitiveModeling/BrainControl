@@ -1,0 +1,22 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar specifying commands to set a new goal
+ */
+
+grammar goal;
+
+<direction> = <knowledge.direction>;
+
+<possible_targets> = <objects.possible_targets>;
+<player_targets> = <players.player_as_target>;
+
+public <goal>	=  	(
+					( (find | look for | go | go to | hit | interact with | touch | collide with) [a|an|the] (<possible_targets> {GOAL(MWO)} | <player_targets> {GOAL(PLAYER)}) [<direction>] ) |
+					( (mount) (<player_targets> {GOAL(INTRINSIC)} {EFFECT(MOUNT)}) ) |
+					( (unmount) (<player_targets> {GOAL(INTRINSIC)} {EFFECT(UNMOUNT)}) ) |
+					( (carry) (<player_targets> {GOAL(INTRINSIC)} {EFFECT(CARRY)}) ) |
+					( (drop) (<player_targets> {GOAL(INTRINSIC)} {EFFECT(DROP)}) ) |
+					( (destroy | kill | open) [a|an|the|that] (<possible_targets>) ) {GOAL(INTRINSIC)} {EFFECT(OBJECT_DESTRUCTION)} | 
+					( (create) [a|an|the|that] (<possible_targets>) ) {GOAL(INTRINSIC)} {EFFECT(OBJECT_CREATION)}
+		       	);

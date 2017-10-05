@@ -1,0 +1,25 @@
+//
+// Tutorial file for Releaselevel 2
+// ================================
+//
+// Note: each line corresponds to one block of help messages.
+// Syntax: minx:maxx:autotime:text1|text2|... 
+// 
+// The help message block becomes active when the maximal x coordinate of any player is in [minx,maxx]
+// The next active message blocks are played when 
+//   a) the help button is pressed 
+//   b) the specified time in the column 3 ("autotime") has passed (in seconds). A negative value disables autoplay. 
+//
+
+
+// first automated greeting message
+//
+0:10:0:Looks like three robots united. Now they can help each other to succeed.
+19:20:0:Since they are quite strong, they can carry each other. Try it out!
+19:20:-1:Bruce is a good Jumper. Make him carry the other two.
+19:20:-1:Go with one robot to Bruce and say jump. While being carried from Bruce both can jump up there.
+30:35:0:Perfect. Look into their brains and you can see that they learned carry and mount. From now on you can use these commands.
+113:136:0:Soooo many destructible blocks. | Looks like a lot of fun!
+//181:191:0:Uh-oh, looks like the human body wants to defend itself. Be careful!
+198:205:0:These guys are not on an exploration trip, are they? | Curiosity reached a new level. Instead of just walking around, they want to get into the control center. | It seems like they want to figure out, if humans can be controlled and shut down - just like they do it with robots.
+234:250:0:What does this mean for us? Are we... doomed?
