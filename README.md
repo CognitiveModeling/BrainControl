@@ -19,7 +19,27 @@ A cognitive control architecture and also a platform video game developed at the
 
 ## Authors
 
+**Chair of Cognitive Modeling:**
+
+Martin V. Butz
+
+**Current Project Supervision:**
+
+Christian Stegemann,
+Yves Röhm
+
+**Former Project Supervision:**
+
+Fabian Schrodt,
+Stephan Ehrenfeld
+
 **Coding and Evaluation:**
+
+*Overall *
+
+Jonas Einig,
+Marcel Binz,
+Mihael Simonic
 
 *Summer term 2016:*
 
@@ -91,21 +111,7 @@ Stefan Mai,
 Jonas David Nick,
 Volker Strobel
 
-**Scientific Assistance:**
 
-Yves Röhm,
-Jonas Einig,
-Marcel Binz,
-Mihael Simonic
-
-**Project Supervision:**
-
-Fabian Schrodt,
-Stephan Ehrenfeld
-
-**Chair of Cognitive Modeling:**
-
-Martin V. Butz
 
 ## License
 
