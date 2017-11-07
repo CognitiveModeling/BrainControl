@@ -35,7 +35,7 @@ Stephan Ehrenfeld
 
 **Coding and Evaluation:**
 
-*Overall *
+*Overall*
 
 Jonas Einig,
 Marcel Binz,
