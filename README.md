@@ -2,7 +2,8 @@
 
 A cognitive control architecture and also a platform video game developed at the chair of Cognitive Modelling at the University of Tuebingen.
 
-> **Note** This is all work in progress and some things might be outdated. If something is unclear, please contact us - through opening an issue, preferably.
+> **Note** This is all work in progress and some things might be outdated. If something is unclear, please contact us - through opening an issue, preferably.  
+> **Git-related Note** This repository uses git-lfs. Be sure to _clone_ the repo _only when you have git-lfs installed_ to actually fetch all files.
 
 ## Getting Started
 
