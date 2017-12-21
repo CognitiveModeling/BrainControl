@@ -134,4 +134,4 @@ Schrodt, F., Kneissler, J., Ehrenfeld, S. und Butz, M. V. (2017). Mario becomes 
 
 Schrodt, F., Roehm, Y., und Butz, M. V. (2017). An event-schematic, cooperative, cognitive architecture plays Super Mario. Cognitive Robot Architectures 10, 10-15.
 
-Butz, M. V., Simonic, M., Binz, M., Einig, J., Ehrenfeld, S., & Schrodt, F. (2016). Is it living? Insights from modeling event-oriented, self-motivated, acting, learning and conversing game agents. In A. Papafragou, D. Grodner, D. Mirman, & J. C. Trueswell, A. Papafragou, D. Grodner, D. Mirman, & J. C. Trueswell (Eds.), Proceedings of the 38th Annual Meeting of the Cognitive Science Society (p. 3062). Austin, TX: Cognitive Science Society.
+Butz, M. V., Simonic, M., Binz, M., Einig, J., Ehrenfeld, S., & Schrodt, F. (2016). Is it living? Insights from modeling event-oriented, self-motivated, acting, learning and conversing game agents. In A. Papafragou, D. Grodner, D. Mirman, & J. C. Trueswell (Eds.), Proceedings of the 38th Annual Meeting of the Cognitive Science Society (p. 3062). Austin, TX: Cognitive Science Society.
