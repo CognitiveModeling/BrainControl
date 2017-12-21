@@ -124,16 +124,14 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 ## Citation
 
-Schrodt, F., Kneissler, J., Ehrenfeld, S. and Butz, M. V. (2017), Mario Becomes Cognitive. 
-Top Cogn Sci, 9: 343–373. doi:10.1111/tops.12252
+Butz, M. V. (2016). Towards a unified sub-symbolic computational theory of cognition. Frontiers in Psychology, 7(925). doi:10.3389/fpsyg.2016.00925 
+ 
+Butz, M. V. (2017). Which structures are out there? Learning predictive compositional concepts based on social sensorimotor explorations. In T. K. Metzinger & W. Wiese, T. K. Metzinger & W. Wiese (Eds.), Philosophy and Predictive Processing. Frankfurt am Main: MIND Group. doi:10.15502/9783958573093
 
-Schrodt, F.; Rohm, Y.; and Butz, M. V. 2017. An event-schematic, cooperative, cognitive architecture plays super
-mario. 
-Cognitive Robot Architectures 10.
+Butz, M. V. und Kutter, E. F. (2017). How the Mind Comes into Being: Introducing Cognitive Science from a Functional and Computational Perspective. Oxford, UK: Oxford University Press.
 
-Is it Alive? Towards Self-Motivated, Acting, Learning
-and Conversing Game Agents. Fabian Schrodt,
-Mihael Simonic, Jonas Einig, Marcel Binz, Stephan
-Ehrenfeld, Martin V. Butz. Proceedings of the 37th
-Conference of the Association for the Advancement
-of Artificial Intelligence (AAAI 2016).
+Schrodt, F., Kneissler, J., Ehrenfeld, S. und Butz, M. V. (2017). Mario becomes cognitive. Topics in Cognitive Science, 9(2), 343–373. doi:10.1111/tops.12252 
+
+Schrodt, F., Roehm, Y., und Butz, M. V. (2017). An event-schematic, cooperative, cognitive architecture plays Super Mario. Cognitive Robot Architectures 10, 10-15.
+
+Butz, M. V., Simonic, M., Binz, M., Einig, J., Ehrenfeld, S., & Schrodt, F. (2016). Is it living? Insights from modeling event-oriented, self-motivated, acting, learning and conversing game agents. In A. Papafragou, D. Grodner, D. Mirman, & J. C. Trueswell, A. Papafragou, D. Grodner, D. Mirman, & J. C. Trueswell (Eds.), Proceedings of the 38th Annual Meeting of the Cognitive Science Society (p. 3062). Austin, TX: Cognitive Science Society.
