@@ -126,7 +126,7 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 Butz, M. V. (2016). Towards a unified sub-symbolic computational theory of cognition. Frontiers in Psychology, 7(925). doi:10.3389/fpsyg.2016.00925 
  
-Butz, M. V. (2017). Which structures are out there? Learning predictive compositional concepts based on social sensorimotor explorations. In T. K. Metzinger & W. Wiese, T. K. Metzinger & W. Wiese (Eds.), Philosophy and Predictive Processing. Frankfurt am Main: MIND Group. doi:10.15502/9783958573093
+Butz, M. V. (2017). Which structures are out there? Learning predictive compositional concepts based on social sensorimotor explorations. In T. K. Metzinger & W. Wiese (Eds.), Philosophy and Predictive Processing. Frankfurt am Main: MIND Group. doi:10.15502/9783958573093
 
 Butz, M. V. und Kutter, E. F. (2017). How the Mind Comes into Being: Introducing Cognitive Science from a Functional and Computational Perspective. Oxford, UK: Oxford University Press.
 
